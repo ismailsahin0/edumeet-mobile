@@ -4,7 +4,9 @@ import { ERROR, PRIMARY_COLOR, SECONDARY_COLOR, WHITE } from "../assets/styles";
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
 import { Background, BackButton, Logo, Header, TextInput, Button } from "../components";
-// import { auth, loginWithEmail, logout } from "../firebase/firebase";
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth } from '../firebase/firebase'
+import * as SecureStore from 'expo-secure-store';
 
 const Login = ({ navigation }) => {
     const [email, setEmail] = useState({ value: '', error: '' })
@@ -18,8 +20,20 @@ const Login = ({ navigation }) => {
             setPassword({ ...password, error: passwordError })
             return
         }
-        // const a = await loginWithEmail(email.value, password.value);
-        // alert(a);
+
+        /*******************login********************/
+        let res;
+        try {
+            const token = await SecureStore.getItemAsync('idToken');
+            res = await signInWithEmailAndPassword(auth, email.value, password.value);
+            await SecureStore.setItemAsync('idToken', res._tokenResponse.idToken);
+        }
+        catch (e) {
+            alert(e);
+            return;
+        }
+        /*******************login********************/
+
         navigation.reset({
             index: 0,
             routes: [{ name: 'Tab' }],

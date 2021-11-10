@@ -5,6 +5,10 @@ import { City, Filters, CardItem } from "../components";
 import styles from "../assets/styles";
 import DEMO from "../assets/data/demo";
 import { Button } from "../components";
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth } from '../firebase/firebase'
+import * as SecureStore from 'expo-secure-store';
+
 
 const Home = ({ navigation }) => {
   const [swiper, setSwiper] = useState(null);
@@ -21,11 +25,19 @@ const Home = ({ navigation }) => {
         </View>
         <Button
           mode="outlined"
-          onPress={() =>
+          onPress={async () => {
+            try {
+              await signOut(auth);
+              await SecureStore.setItemAsync('idToken', '');
+            }
+            catch (e) {
+              alert(e);
+            }
             navigation.reset({
               index: 0,
               routes: [{ name: 'Home' }],
             })
+          }
           }
         >
           Logout

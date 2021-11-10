@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
@@ -16,7 +17,27 @@ const ResetPassword = ({ navigation }) => {
             setEmail({ ...email, error: emailError })
             return
         }
-        navigation.navigate('LoginScreen')
+        const url = "http://10.0.2.2:3001/forgotpassword/" + email.value;
+        const config =
+        {
+            headers: {
+                Authorization: "Edumeet edumeet"
+            }
+        }
+        axios.post(url, {}, config)
+            .then((res) => {
+                if (res.data.status === "error") {
+                    throw res.data.message;
+                }
+                console.log("RESPONSE RECEIVED: ", res);
+                alert('Verification mail is sended, you can reset your password with link...')
+                // navigation.navigate('Login')
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+                alert(err);
+            })
+
     }
     return (
         <Background>
