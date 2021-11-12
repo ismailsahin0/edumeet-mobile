@@ -91,6 +91,7 @@ const Register = ({ navigation }) => {
                     onChangeText={(text) => setName({ value: text, error: '' })}
                     error={!!name.error}
                     errorText={name.error}
+                    maxLength={15}
                 />
                 <TextInput
                     label="Surname"
@@ -99,6 +100,7 @@ const Register = ({ navigation }) => {
                     onChangeText={(text) => setSurname({ value: text, error: '' })}
                     error={!!surname.error}
                     errorText={surname.error}
+                    maxLength={15}
                 />
                 <TextInput
                     label="Email"
@@ -111,6 +113,7 @@ const Register = ({ navigation }) => {
                     autoCompleteType="email"
                     textContentType="emailAddress"
                     keyboardType="email-address"
+                    maxLength={15}
                 />
                 <TextInput
                     label="Password"
@@ -120,6 +123,7 @@ const Register = ({ navigation }) => {
                     error={!!password.error}
                     errorText={password.error}
                     secureTextEntry
+                    maxLength={15}
                 />
                 <TextInput
                     label="University"
@@ -136,6 +140,8 @@ const Register = ({ navigation }) => {
                     onChangeText={(text) => setAge({ value: text, error: '' })}
                     error={!!age.error}
                     errorText={age.error}
+                    keyboardType='numeric'
+                    maxLength={2}  //setting limit of input
                 />
                 <TextInput
                     label="Gender"

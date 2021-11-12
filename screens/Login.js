@@ -24,20 +24,23 @@ const Login = ({ navigation }) => {
         /*******************login********************/
         let res;
         try {
-            const token = await SecureStore.getItemAsync('idToken');
+            //const token = await SecureStore.getItemAsync('idToken');
             res = await signInWithEmailAndPassword(auth, email.value, password.value);
-            await SecureStore.setItemAsync('idToken', res._tokenResponse.idToken);
+            if (!res.user.emailVerified) { // doğrulamalı logini açmak için ünlem kalkcak
+                await SecureStore.setItemAsync('idToken', res._tokenResponse.idToken);
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Tab' }],
+                })
+            } else {
+                alert("Mail adresinize gönderilen linkten hesabınızı doğrulayın.")
+            }
         }
         catch (e) {
             alert(e);
             return;
         }
         /*******************login********************/
-
-        navigation.reset({
-            index: 0,
-            routes: [{ name: 'Tab' }],
-        })
     }
     return (
         <Background>
