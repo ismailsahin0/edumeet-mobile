@@ -300,4 +300,43 @@ export default StyleSheet.create({
   iconMenu: {
     alignItems: "center",
   },
+
+  //MODAL
+  modalContainer: {
+    backgroundColor: WHITE,
+    height: DIMENSION_HEIGHT,
+    margin: 0,
+    borderRadius: 8,
+    elevation: 1,
+  },
+
+  modalTop: {
+    paddingTop: 20,
+    marginHorizontal: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  modalBody: {
+    paddingTop: 20,
+    marginHorizontal: 10,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  modalItems: {
+    margin: 2,
+    height: 50,
+    width: DIMENSION_WIDTH,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: GRAY,
+    borderRadius: 8,
+    elevation: 1,
+  },
+  modalText: {
+    color: WHITE
+  }
 });

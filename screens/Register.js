@@ -5,9 +5,6 @@ import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
 import { nameValidator } from '../helpers/nameValidator'
 import { surnameValidator } from '../helpers/surnameValidator';
-import { universityValidator } from '../helpers/universityValidator';
-import { ageValidator } from '../helpers/ageValidator';
-import { genderValidator } from '../helpers/genderValidator';
 import { Background, BackButton, Logo, Header, TextInput, Button } from "../components";
 import { ERROR, PRIMARY_COLOR, SECONDARY_COLOR, WHITE } from "../assets/styles";
 
@@ -17,39 +14,38 @@ const Register = ({ navigation }) => {
     const [surname, setSurname] = useState({ value: '', error: '' })
     const [email, setEmail] = useState({ value: '', error: '' })
     const [password, setPassword] = useState({ value: '', error: '' })
-    const [university, setUniversity] = useState({ value: '', error: '' })
-    const [age, setAge] = useState({ value: '', error: '' })
-    const [gender, setGender] = useState({ value: '', error: '' })
+    const [password1, setPassword1] = useState({ value: '', error: '' })
 
     const onSignUpPressed = () => {
         const nameError = nameValidator(name.value)
         const surnameError = surnameValidator(surname.value)
         const emailError = emailValidator(email.value)
         const passwordError = passwordValidator(password.value)
-        const universityError = universityValidator(university.value)
-        const ageError = ageValidator(age.value)
-        const genderError = genderValidator(gender.value)
+        const passwordError1 = passwordValidator(password1.value)
 
-        if (emailError || passwordError || nameError || surnameError || universityError || ageError || genderError) {
+        if (emailError || passwordError || nameError || surnameError || passwordError1) {
             setName({ ...name, error: nameError })
             setEmail({ ...email, error: emailError })
             setPassword({ ...password, error: passwordError })
+            setPassword({ ...password1, error: passwordError1 })
             setSurname({ ...surname, error: surnameError })
-            setUniversity({ ...university, error: universityError })
-            setAge({ ...age, error: ageError })
-            setGender({ ...gender, error: genderError })
             return
         }
-        const url = "http://10.0.2.2:3001/register";
+
+        if (password.value != password1.value) {
+            alert('Passwords are not same!');
+            setPassword({ value: '', error: '' });
+            setPassword1({ value: '', error: '' });
+            return
+        }
+        const url = "http://edumeet-server.herokuapp.com/usr/register";
+        //const url = "https://10.0.2.2:3001/usr/register";
         const data =
         {
             "email": email.value,
             "password": password.value,
             "name": name.value,
-            "surname": surname.value,
-            "university": university.value,
-            "age": age.value,
-            "gender": gender.value
+            "surname": surname.value
         }
         const config =
         {
@@ -57,6 +53,7 @@ const Register = ({ navigation }) => {
                 Authorization: "Edumeet edumeet"
             }
         }
+
         axios.post(url, data, config)
             .then((res) => {
                 if (res.data.status === "error") {
@@ -64,6 +61,11 @@ const Register = ({ navigation }) => {
                 }
                 console.log("RESPONSE RECEIVED: ", res);
                 alert('You are registered, you can login after verify your email...');
+                setName({ value: '', error: '' });
+                setEmail({ value: '', error: '' });
+                setPassword({ value: '', error: '' });
+                setPassword1({ value: '', error: '' });
+                setSurname({ value: '', error: '' });
                 // navigation.reset({
                 //     index: 0,
                 //     routes: [{ name: 'Login' }],
@@ -113,7 +115,7 @@ const Register = ({ navigation }) => {
                     autoCompleteType="email"
                     textContentType="emailAddress"
                     keyboardType="email-address"
-                    maxLength={15}
+                    maxLength={50}
                 />
                 <TextInput
                     label="Password"
@@ -126,31 +128,16 @@ const Register = ({ navigation }) => {
                     maxLength={15}
                 />
                 <TextInput
-                    label="University"
-                    returnKeyType="next"
-                    value={university.value}
-                    onChangeText={(text) => setUniversity({ value: text, error: '' })}
-                    error={!!university.error}
-                    errorText={university.error}
+                    label="Password Again"
+                    returnKeyType="done"
+                    value={password1.value}
+                    onChangeText={(text) => setPassword1({ value: text, error: '' })}
+                    error={!!password1.error}
+                    errorText={password1.error}
+                    secureTextEntry
+                    maxLength={15}
                 />
-                <TextInput
-                    label="Age"
-                    returnKeyType="next"
-                    value={age.value}
-                    onChangeText={(text) => setAge({ value: text, error: '' })}
-                    error={!!age.error}
-                    errorText={age.error}
-                    keyboardType='numeric'
-                    maxLength={2}  //setting limit of input
-                />
-                <TextInput
-                    label="Gender"
-                    returnKeyType="next"
-                    value={gender.value}
-                    onChangeText={(text) => setGender({ value: text, error: '' })}
-                    error={!!gender.error}
-                    errorText={gender.error}
-                />
+
                 <Button
                     mode="contained"
                     onPress={onSignUpPressed}

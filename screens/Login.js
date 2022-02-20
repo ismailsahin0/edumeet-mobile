@@ -25,9 +25,12 @@ const Login = ({ navigation }) => {
         let res;
         try {
             //const token = await SecureStore.getItemAsync('idToken');
+            console.log("email: ", email.value)
             res = await signInWithEmailAndPassword(auth, email.value, password.value);
-            if (!res.user.emailVerified) { // doğrulamalı logini açmak için ünlem kalkcak
+            if (res.user.emailVerified) { // doğrulamalı logini açmak için ünlem kalkcak
                 await SecureStore.setItemAsync('idToken', res._tokenResponse.idToken);
+                await SecureStore.setItemAsync('email', email.value);
+                await SecureStore.setItemAsync('uid', res.user.uid);
                 navigation.reset({
                     index: 0,
                     routes: [{ name: 'Tab' }],
@@ -37,6 +40,7 @@ const Login = ({ navigation }) => {
             }
         }
         catch (e) {
+            console.log(e);
             alert(e);
             return;
         }

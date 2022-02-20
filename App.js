@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home, Matches, Messages, Profile } from "./screens";
+import { Home, Matches, Messages, MyProfile } from "./screens";
 import { PRIMARY_COLOR, DARK_GRAY, BLACK, WHITE } from "./assets/styles";
 import TabBarIcon from "./components/TabBarIcon";
 import { Login, Register, ResetPassword, HomeScreen } from "./screens";
@@ -101,7 +101,7 @@ const App = () => {
 
               <Tab.Screen
                 name="Profile"
-                component={Profile}
+                component={MyProfile}
                 options={{
                   tabBarIcon: ({ focused }) => (
                     <TabBarIcon

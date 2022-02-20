@@ -2,13 +2,13 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 export default firebaseConfig = {
-    apiKey: "AIzaSyDSgQa-U3rOgcxX4w__8LNl858YvGzQyQY",
-    authDomain: "edumeet-58d73.firebaseapp.com",
-    projectId: "edumeet-58d73",
-    storageBucket: "edumeet-58d73.appspot.com",
-    messagingSenderId: "43750306031",
-    appId: "1:43750306031:web:4d710b02247d3d87edeb1a",
-    measurementId: "G-XGCXGC36KY"
+    apiKey: "AIzaSyBvnIHDk5W2tjq2htod7Nz6a91nMxD8UIA",
+    authDomain: "edumeet-5fadf.firebaseapp.com",
+    projectId: "edumeet-5fadf",
+    storageBucket: "edumeet-5fadf.appspot.com",
+    messagingSenderId: "197756201025",
+    appId: "1:197756201025:web:62d6d0596e432f0555fec0",
+    measurementId: "G-CF8JMLSC7B"
 };
 
 // initialize firebase
